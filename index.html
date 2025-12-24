@@ -74,12 +74,99 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* --- ส่วนที่เพิ่มใหม่: Character Modal --- */
+        #intro-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+        }
+        .character-bounce {
+            animation: bounce 2s infinite ease-in-out;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* --- ส่วนที่เพิ่มใหม่: Floating Guide Character --- */
+        #floating-guide {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 999;
+            display: none; /* ซ่อนไว้ก่อนจนกว่าจะกดเริ่ม */
+            flex-direction: column;
+            align-items: flex-end;
+            pointer-events: none;
+        }
+        .speech-bubble {
+            background: white;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            max-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        .speech-bubble.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            right: 20px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 8px solid white;
+        }
+        .guide-img {
+            width: 80px;
+            height: 80px;
+            pointer-events: auto;
+            cursor: pointer;
+            filter: drop-shadow(0 0 10px var(--primary));
+        }
     </style>
 </head>
 <body>
 
     <div id="particles-js"></div>
     <div id="cursor"></div>
+
+    <div id="floating-guide">
+        <div id="bubble" class="speech-bubble">สวัสดีจ้า! ตามมาดูงานทางนี้เลย</div>
+        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" class="guide-img character-bounce" alt="Guide">
+    </div>
+
+    <div id="intro-modal" class="p-4">
+        <div class="glass p-8 rounded-[3rem] max-w-lg w-full text-center relative overflow-hidden border-cyan-400/30">
+            <div class="mb-6 character-bounce">
+                <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="Character" class="w-40 h-40 mx-auto drop-shadow-[0_0_20px_rgba(0,242,254,0.5)]">
+            </div>
+            <h3 class="text-3xl font-bold mb-4 gradient-text">ยินดีที่ได้รู้จักครับ!</h3>
+            <p class="text-gray-300 mb-8 leading-relaxed">
+                ผมเป็นวิศวกรที่หลงใหลในเทคโนโลยีและพลังงานสะอาด 
+                พร้อมจะพาคุณไปชมผลงานนวัตกรรมที่ผมตั้งใจสร้างสรรค์ขึ้นมาครับ
+            </p>
+            <button onclick="closeIntro()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold py-3 px-10 rounded-full transition-all duration-300 shadow-lg shadow-cyan-500/20">
+                เริ่มชมผลงาน
+            </button>
+        </div>
+    </div>
 
     <div class="content-layer">
         <nav class="fixed w-full py-6 px-10 flex justify-between items-center z-50">
@@ -91,21 +178,21 @@
             </div>
         </nav>
 
-        <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-6">
-            <div data-aos="zoom-out" data-aos-duration="1500">
-                <h2 class="text-cyan-400 tracking-[0.5em] text-sm mb-4 uppercase">Engineering & Creative</h2>
-                <h1 class="text-6xl md:text-9xl font-extrabold mb-6">I AM <span id="typed" class="gradient-text"></span></h1>
-                <p class="max-w-xl text-gray-400 text-lg font-light leading-relaxed">
-                    เชี่ยวชาญด้านงานวิศวกรรมและการติดตั้งระบบพลังงานสะอาด 
-                    รวมถึงการพัฒนานวัตกรรมที่ตอบโจทย์อนาคต
-                </p>
-                <div class="mt-12">
-                    <a href="#projects" class="glass px-10 py-4 rounded-full glow-hover transition-all duration-500 inline-block">
-                        View Portfolio
-                    </a>
-                </div>
-            </div>
-        </section>
+<section id="home" class="h-screen flex flex-col justify-center items-center text-center px-6">
+    <div data-aos="zoom-out" data-aos-duration="1500">
+        <h2 class="text-cyan-400 tracking-[0.5em] text-sm mb-4 uppercase">Computer Engineering & IT Support</h2>
+        <h1 class="text-6xl md:text-9xl font-extrabold mb-6 uppercase">I AM <span id="typed" class="gradient-text"></span></h1>
+        <p class="max-w-xl text-gray-400 text-lg font-light leading-relaxed">
+        </p>
+          บัณฑิตสาขาวิศวกรรมคอมพิวเตอร์ที่มีประสบการณ์ IT Support ในสถานพยาบาล <br>
+            มีประสบการณ์แก้ปัญหา Hardware, Software, ระบบ Networkเบื้องต้น และการพัฒนาระบบ Monitoring
+        <div class="mt-12">
+            <button onclick="openIntro()" class="glass px-10 py-4 rounded-full glow-hover transition-all duration-500 inline-block cursor-pointer">
+                View Portfolio
+            </button>
+        </div>
+    </div>
+</section>
 
  <section id="projects" class="py-32 px-10 max-w-7xl mx-auto">
     <h2 class="text-4xl font-bold mb-20 text-center" data-aos="fade-up">
@@ -114,7 +201,7 @@
 
     <div class="grid md:grid-cols-2 gap-10">
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl" data-aos="fade-up">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('โปรเจกต์ติดตั้งแผงโซลาร์เซลล์พลังงานสะอาด เพื่ออนาคตที่ยั่งยืนครับ')">
             <div class="overflow-hidden">
                 <img src="1.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -122,12 +209,12 @@
                 <h3 class="text-2xl font-bold mb-2">Solar Energy Installation</h3>
                 <p class="text-cyan-400 mb-4 font-light">Green Energy Solution</p>
                 <p class="text-gray-400 text-sm leading-relaxed">
-                    งานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง เพื่อการบริหารจัดการพลังงานสะอาด
+                    ร่วมศึกษางานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง เพื่อการบริหารจัดการพลังงานสะอาด
                 </p>
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20" data-aos="fade-up" data-aos-delay="200">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('งานออกแบบแผงวงจรอิเล็กทรอนิกส์ที่ผมภูมิใจนำเสนอเลยครับ')">
             <div class="overflow-hidden">
                 <img src="2.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -140,7 +227,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl" data-aos="fade-up">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('การควบคุมงานหน้างานเพื่อให้ได้คุณภาพมาตรฐานวิศวกรรมครับ')">
             <div class="overflow-hidden">
                 <img src="8.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -153,7 +240,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20" data-aos="fade-up" data-aos-delay="200">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('การวางระบบเน็ตเวิร์คหลังบ้านให้ทำงานได้อย่างเสถียรครับ')">
             <div class="overflow-hidden">
                 <img src="3.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -166,7 +253,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl" data-aos="fade-up">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('ระบบแดชบอร์ดดูข้อมูลแบบเรียลไทม์ ใช้งานง่ายมากเลยจ้า')">
             <div class="overflow-hidden">
                 <img src="4.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -179,7 +266,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20" data-aos="fade-up" data-aos-delay="200">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('ดูแลเซิร์ฟเวอร์และระบบไอทีให้พร้อมใช้งานตลอดเวลาครับ')">
             <div class="overflow-hidden">
                 <img src="5.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -192,7 +279,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl" data-aos="fade-up">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('งานสนับสนุนระบบอีอาร์พี เพื่อช่วยให้องค์กรทำงานได้ไหลลื่นครับ')">
             <div class="overflow-hidden">
                 <img src="6.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -205,7 +292,7 @@
             </div>
         </div>
 
-        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20" data-aos="fade-up" data-aos-delay="200">
+        <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('ระบบอัตโนมัติที่ช่วยลดขั้นตอนการทำงานในอุตสาหกรรมครับ')">
             <div class="overflow-hidden">
                 <img src="7.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700">
             </div>
@@ -276,8 +363,9 @@
 
         new Typed('#typed', {
             strings: ['AN ENGINEER', 'A DEVELOPER', 'AN INNOVATOR'],
-            typeSpeed: 60,
-            backSpeed: 40,
+            typeSpeed: 120,
+            backSpeed: 80,
+            backDelay: 1500,
             loop: true
         });
 
@@ -296,6 +384,68 @@
                     "width": 1
                 },
                 "move": { "enable": true, "speed": 1.5 }
+            }
+        });
+
+        // --- ระบบเสียงและไกด์ ---
+        let bubbleTimeout;
+
+        function guideTalk(text) {
+            const bubble = document.getElementById('bubble');
+            const guide = document.getElementById('floating-guide');
+            
+            // ยกเลิก timeout เดิมถ้ามี
+            clearTimeout(bubbleTimeout);
+
+            // แสดงคำพูด
+            bubble.innerText = text;
+            bubble.classList.add('active');
+            guide.style.display = 'flex';
+
+            // ระบบเสียงบรรยาย (Text-to-Speech)
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = 'th-TH'; // ภาษาไทย
+            msg.rate = 1.1;     // ความเร็ว
+            msg.pitch = 1.2;    // ระดับเสียงให้น่ารักขึ้น
+            window.speechSynthesis.cancel(); // หยุดเสียงเก่าก่อน
+            window.speechSynthesis.speak(msg);
+
+            // ซ่อนฟองคำพูดหลังจาก 5 วินาที
+            bubbleTimeout = setTimeout(() => {
+                bubble.classList.remove('active');
+            }, 5000);
+        }
+
+        function openIntro() {
+            const modal = document.getElementById('intro-modal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeIntro() {
+            const modal = document.getElementById('intro-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+            
+            // เริ่มต้นการเป็นไกด์
+            document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+            
+            // ให้ไกด์ทักทายเมื่อเริ่ม
+            setTimeout(() => {
+                guideTalk("ว้าว! ผลงานทั้งหมดของผมอยู่ตรงนี้ครับ ลองคลิกดูแต่ละงานได้เลยจ้า");
+            }, 1000);
+        }
+
+        // เพิ่มลูกเล่นให้ไกด์ทักทายตอนถึง Contact
+        window.addEventListener('scroll', () => {
+            const contactSection = document.getElementById('contact');
+            const rect = contactSection.getBoundingClientRect();
+            if (rect.top >= 0 && rect.top <= window.innerHeight) {
+                if(!window.contactGreetingDone) {
+                    guideTalk("สนใจร่วมงานกับผม ติดต่อมาได้ตลอดเลยนะครับ ยินดีเสมอครับ!");
+                    window.contactGreetingDone = true;
+                }
             }
         });
     </script>
