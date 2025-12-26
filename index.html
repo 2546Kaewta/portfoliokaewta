@@ -423,26 +423,65 @@
         }
 
         // ฟังก์ชันสร้างปุ่มหัวข้อ
-        function renderQuickReplies() {
-            const quickArea = document.getElementById('quick-area');
-            if (!quickArea) {
-                const area = document.createElement('div');
-                area.id = 'quick-area';
-                area.className = 'quick-replies';
-                const topics = ["  ทักษะทั้งหมด", " ประวัติฝึกงาน", "  โปรเจกต์เด่น", "  การศึกษา", "  ติดต่อแก้วตา"];
-                topics.forEach(topic => {
-                    const btn = document.createElement('button');
-                    btn.className = 'btn-quick';
-                    btn.innerText = topic;
-                    btn.onclick = () => {
-                        document.getElementById('user-input').value = topic;
-                        sendMessage();
-                    };
-                    area.appendChild(btn);
-                });
-                document.getElementById('chat-messages').after(area);
-            }
-        }
+function renderQuickReplies() {
+    const quickArea = document.getElementById('quick-area');
+
+    if (!quickArea) {
+        const area = document.createElement('div');
+        area.id = 'quick-area';
+        area.className = 'quick-replies';
+
+        // 👉 จัด layout ให้ปุ่มแยกกัน
+        area.style.display = 'flex';
+        area.style.gap = '12px';
+        area.style.flexWrap = 'wrap';
+        area.style.marginTop = '12px';
+
+        const topics = [
+            "ทักษะทั้งหมด",
+            "ประวัติฝึกงาน",
+            "โปรเจกต์เด่น",
+            "การศึกษา",
+            "ติดต่อแก้วตา"
+        ];
+
+        topics.forEach(topic => {
+            const btn = document.createElement('button');
+            btn.className = 'btn-quick';
+            btn.innerText = topic;
+
+            // 👉 style ปุ่มแต่ละอัน
+            btn.style.padding = '8px 14px';
+            btn.style.borderRadius = '18px';
+            btn.style.border = '1px solid #00e5ff';
+            btn.style.background = 'transparent';
+            btn.style.color = '#ffffff';
+            btn.style.cursor = 'pointer';
+            btn.style.fontSize = '14px';
+            btn.style.transition = 'all 0.25s ease';
+
+            btn.onmouseenter = () => {
+                btn.style.background = '#00e5ff';
+                btn.style.color = '#000';
+            };
+
+            btn.onmouseleave = () => {
+                btn.style.background = 'transparent';
+                btn.style.color = '#fff';
+            };
+
+            btn.onclick = () => {
+                document.getElementById('user-input').value = topic;
+                sendMessage();
+            };
+
+            area.appendChild(btn);
+        });
+
+        document.getElementById('chat-messages').after(area);
+    }
+}
+
 
         function sendMessage() {
             const input = document.getElementById('user-input');
@@ -487,7 +526,7 @@
             }, 500);
         }
 
-        // --- ระบบเสียงและไกด์ (ของเดิมคงไว้) ---
+        // ระบบเสียงและไกด์
         let bubbleTimeout;
         function guideTalk(text) {
             const bubble = document.getElementById('bubble');
@@ -517,7 +556,7 @@
             document.getElementById('intro-modal').style.display = 'none';
             document.body.style.overflow = 'auto';
             document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => { guideTalk("ว้าว! ผลงานทั้งหมดของผมอยู่ตรงนี้ครับ ลองคลิกดูแต่ละงานได้เลยจ้า"); }, 1000);
+            setTimeout(() => { guideTalk("ว้าว! ผลงานทั้งหมดของผมอยู่ตรงนี้ครับ ลองคลิกดูแต่ละงานได้เลย"); }, 1000);
         } 
 
         window.addEventListener('scroll', () => {
@@ -533,5 +572,3 @@
     </script>
 </body>
 </html>
-
-
