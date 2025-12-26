@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,44 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;400;600&family=Outfit:wght@300;600;800&display=swap"
+        rel="stylesheet">
+
     <style>
         :root {
             --primary: #00f2fe;
             --secondary: #4facfe;
         }
+
         body {
             font-family: 'Outfit', 'Kanit', sans-serif;
             background-color: #050505;
             color: white;
-            cursor: auto; 
+            cursor: auto;
         }
+
+        @media (hover: hover) and (pointer: fine) {
+            body {
+                cursor: none;
+            }
+        }
+
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
             z-index: 1;
         }
-        .content-layer { position: relative; z-index: 10; }
-        
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+
         #cursor {
-            width: 20px; height: 20px;
+            width: 20px;
+            height: 20px;
             background: var(--primary);
             border-radius: 50%;
             position: fixed;
@@ -45,15 +61,18 @@
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         .glow-hover:hover {
             box-shadow: 0 0 30px rgba(0, 242, 254, 0.4);
             border-color: var(--primary);
         }
+
         .gradient-text {
             background: linear-gradient(90deg, #00f2fe, #4facfe, #7367f0);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
+
         /* ลูกเล่นเพิ่มเติมสำหรับ Video */
         .video-container {
             position: relative;
@@ -61,21 +80,30 @@
             border-radius: 2rem;
             box-shadow: 0 0 50px rgba(0, 242, 254, 0.1);
         }
+
         .video-container::before {
             content: '';
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
             background: conic-gradient(transparent, transparent, transparent, var(--primary));
             animation: rotate 4s linear infinite;
             z-index: -1;
         }
+
         @keyframes rotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
-        /* --- ส่วนที่เพิ่มใหม่: Character Modal --- */
+        /*  Character Modal --- */
         #intro-modal {
             display: none;
             position: fixed;
@@ -86,25 +114,35 @@
             background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(10px);
         }
+
         .character-bounce {
             animation: bounce 2s infinite ease-in-out;
         }
+
         @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
         }
 
-        /* --- ส่วนที่เพิ่มใหม่: Floating Guide Character --- */
+        /*  Floating Guide Character --- */
         #floating-guide {
             position: fixed;
             bottom: 20px;
             right: 20px;
             z-index: 999;
-            display: none; /* ซ่อนไว้ก่อนจนกว่าจะกดเริ่ม */
+            display: none;
             flex-direction: column;
             align-items: flex-end;
-            pointer-events: auto; /* เปลี่ยนเป็น auto เพื่อให้คลิกได้ */
+            pointer-events: auto;
         }
+
         .speech-bubble {
             background: white;
             color: #333;
@@ -114,16 +152,18 @@
             font-size: 14px;
             font-weight: 600;
             max-width: 200px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             position: relative;
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.3s ease;
         }
+
         .speech-bubble.active {
             opacity: 1;
             transform: translateY(0);
         }
+
         .speech-bubble::after {
             content: '';
             position: absolute;
@@ -133,6 +173,7 @@
             border-right: 8px solid transparent;
             border-top: 8px solid white;
         }
+
         .guide-img {
             width: 80px;
             height: 80px;
@@ -140,7 +181,7 @@
             filter: drop-shadow(0 0 10px var(--primary));
         }
 
-        /* --- ระบบแชทบอร์ดสไตล์ Glassmorphism --- */
+        /*  ระบบแชทบอร์ดสไตล์ Glassmorphism*/
         #chat-box {
             position: fixed;
             bottom: 110px;
@@ -152,8 +193,9 @@
             flex-direction: column;
             border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
+
         #chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -164,20 +206,38 @@
             scrollbar-width: thin;
             scrollbar-color: var(--primary) transparent;
         }
-        .msg { padding: 8px 12px; border-radius: 12px; font-size: 13px; max-width: 80%; }
-        .bot-msg { background: rgba(255,255,255,0.1); color: white; align-self: flex-start; }
-        .user-msg { background: var(--primary); color: black; align-self: flex-end; font-weight: 600; }
-        
+
+        .msg {
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 13px;
+            max-width: 80%;
+        }
+
+        .bot-msg {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            align-self: flex-start;
+        }
+
+        .user-msg {
+            background: var(--primary);
+            color: black;
+            align-self: flex-end;
+            font-weight: 600;
+        }
+
         .chat-input-area {
             padding: 10px;
             display: flex;
             gap: 5px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         #user-input {
             flex: 1;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             padding: 5px 10px;
             color: white;
@@ -185,6 +245,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div id="particles-js"></div>
@@ -196,53 +257,49 @@
             <button onclick="toggleChat()" class="text-xs text-gray-400">ปิด</button>
         </div>
         <div id="chat-messages">
-            <div class="msg bot-msg">สวัสดีครับ! ผมเป็นผู้ช่วยของแก้วตา มีอะไรให้ผมช่วยไหมครับ? ลองถามเกี่ยวกับ "ทักษะ" หรือ "ติดต่อ" ดูได้นะ</div>
+            <div class="msg bot-msg">สวัสดีครับ! ผมเป็นผู้ช่วยของแก้วตา มีอะไรให้ผมช่วยไหมครับ? ลองถามเกี่ยวกับ "ทักษะ"
+                หรือ "ติดต่อ" ดูได้นะ</div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="user-input" placeholder="พิมพ์ข้อความ..." onkeypress="if(event.key === 'Enter') sendMessage()">
-            <button onclick="sendMessage()" class="bg-cyan-500 text-black px-3 py-1 rounded-lg text-sm font-bold">ส่ง</button>
+            <input type="text" id="user-input" placeholder="พิมพ์ข้อความ..."
+                onkeypress="if(event.key === 'Enter') sendMessage()">
+            <button onclick="sendMessage()"
+                class="bg-cyan-500 text-black px-3 py-1 rounded-lg text-sm font-bold">ส่ง</button>
         </div>
     </div>
 
     <div id="floating-guide" onclick="toggleChat()">
-        <div id="bubble" class="speech-bubble">สวัสดีจ้า! ตามมาดูงานทางนี้เลย</div>
-        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=RoboTech&baseColor=00f2fe&eyes=bulging" 
-             class="guide-img character-bounce" 
-             alt="Robot Guide"
-             style="filter: drop-shadow(0 0 15px #00f2fe);">    
+        <div id="bubble" class="speech-bubble">สวัสดีค่ะ ตามมาดูงานทางนี้เลย</div>
+        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=RoboTech&baseColor=00f2fe&eyes=bulging"
+            class="guide-img character-bounce" alt="Robot Guide" style="filter: drop-shadow(0 0 15px #00f2fe);">
     </div>
 
-<div id="intro-modal" class="p-4">
-    <div class="glass p-8 rounded-[3rem] max-w-lg w-full text-center relative overflow-hidden border-cyan-400/30">
-        <div class="mb-6 character-bounce">
-            <img
-                src="https://api.dicebear.com/7.x/bottts/svg?seed=Kaewta&baseColor=00f2fe&eyes=bulging"
-                alt="Character"
-                class="w-40 h-40 mx-auto drop-shadow-[0_0_20px_rgba(0,242,254,0.5)]"
-            >
-        </div>
+    <div id="intro-modal" class="p-4">
+        <div class="glass p-8 rounded-[3rem] max-w-lg w-full text-center relative overflow-hidden border-cyan-400/30">
+            <div class="mb-6 character-bounce">
+                <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Kaewta&baseColor=00f2fe&eyes=bulging"
+                    alt="Character" class="w-40 h-40 mx-auto drop-shadow-[0_0_20px_rgba(0,242,254,0.5)]">
+            </div>
 
-        <h3 class="text-3xl font-bold mb-4 gradient-text">
-            สวัสดีค่ะ ยินดีที่ได้รู้จักนะคะ
-        </h3>
-        <p class="text-gray-300 mb-8 leading-relaxed text-lg">
-            หนูชื่อแก้วตาค่ะ มีประสบการณ์ด้าน
-            <span class="text-cyan-400 font-semibold">
-                IT Support และระบบคอมพิวเตอร์
-            </span><br>
-            เดี๋ยวหนูจะพาคุณไปชมผลงานที่ตั้งใจทำไว้ทีละชิ้นนะคะ
-        </p>
-        <button
-            onclick="closeIntro()"
-            class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold
+            <h3 class="text-3xl font-bold mb-4 gradient-text">
+                สวัสดีค่ะ ยินดีที่ได้รู้จักนะคะ
+            </h3>
+            <p class="text-gray-300 mb-8 leading-relaxed text-lg">
+                หนูชื่อแก้วตาค่ะ มีประสบการณ์ด้าน
+                <span class="text-cyan-400 font-semibold">
+                    IT Support และระบบคอมพิวเตอร์
+                </span><br>
+                เดี๋ยวหนูจะพาคุณไปชมผลงานที่ตั้งใจทำไว้ทีละชิ้นนะคะ
+            </p>
+            <button onclick="closeIntro()" class="bg-cyan-500 hover:bg-cyan-400 text-black font-bold
                    py-3 px-12 rounded-full transition-all duration-300
                    shadow-lg shadow-cyan-500/30
                    hover:scale-110 active:scale-95">
-            เริ่มชมผลงาน
-        </button>
+                เริ่มชมผลงาน
+            </button>
 
+        </div>
     </div>
-</div>
 
 
     <div class="content-layer">
@@ -258,14 +315,16 @@
         <section id="home" class="h-screen flex flex-col justify-center items-center text-center px-6">
             <div data-aos="zoom-out" data-aos-duration="1500">
                 <h2 class="text-cyan-400 tracking-[0.5em] text-sm mb-4 uppercase">Kaewta Rattana & IT Support</h2>
-                <h1 class="text-6xl md:text-9xl font-extrabold mb-6 uppercase">I AM <span id="typed" class="gradient-text"></span></h1>
+                <h1 class="text-6xl md:text-9xl font-extrabold mb-6 uppercase">I AM <span id="typed"
+                        class="gradient-text"></span></h1>
                 <p class="max-w-xl text-gray-400 text-lg font-light leading-relaxed">
-                
+
                 </p>
-                 บัณฑิตสาขาวิศวกรรมคอมพิวเตอร์ที่มีประสบการณ์ IT Support ในสถานพยาบาล <br>
-                    มีประสบการณ์แก้ปัญหา Hardware Software ระบบ Networkเบื้องต้น และการพัฒนาระบบ Monitoring
+                บัณฑิตสาขาวิศวกรรมคอมพิวเตอร์ที่มีประสบการณ์ IT Support ในสถานพยาบาล <br>
+                มีประสบการณ์แก้ปัญหา Hardware Software ระบบ Networkเบื้องต้น และการพัฒนาระบบ Monitoring
                 <div class="mt-12">
-                    <button onclick="openIntro()" class="glass px-12 py-4 rounded-full glow-hover transition-all duration-500 inline-block cursor-pointer hover:scale-110 active:scale-95 relative overflow-hidden">
+                    <button onclick="openIntro()"
+                        class="glass px-12 py-4 rounded-full glow-hover transition-all duration-500 inline-block cursor-pointer hover:scale-110 active:scale-95 relative overflow-hidden">
                         <span class="relative z-10"> View Portfolio </span>
                     </button>
                 </div>
@@ -273,83 +332,124 @@
         </section>
 
         <section id="projects" class="py-32 px-10 max-w-7xl mx-auto">
-            <h2 class="text-4xl font-bold mb-20 text-center" data-aos="fade-up">Selected <span class="gradient-text">Projects</span></h2>
+            <h2 class="text-4xl font-bold mb-20 text-center" data-aos="fade-up">Selected <span
+                    class="gradient-text">Projects</span></h2>
             <div class="grid md:grid-cols-2 gap-10">
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('ร่วมศึกษางานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง เพื่อการบริหารจัดการพลังงานสะอาด')">
-                    <div class="overflow-hidden"><img src="1.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer"
+                    data-aos="fade-up"
+                    onclick="guideTalk('ร่วมศึกษางานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง เพื่อการบริหารจัดการพลังงานสะอาด')">
+                    <div class="overflow-hidden"><img src="1.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Solar Energy Installation</h3>
                         <p class="text-cyan-400 mb-4 font-light">Green Energy Solution</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">ร่วมศึกษางานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง เพื่อการบริหารจัดการพลังงานสะอาด</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">ร่วมศึกษางานติดตั้งแผงโซลาร์เซลล์ประสิทธิภาพสูง
+                            เพื่อการบริหารจัดการพลังงานสะอาด</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('การติดตั้งและกำหนดค่าระบบเครือข่าย UniFi รวมถึงการเข้าหัวสายสัญญาณความเร็วสูง เพื่อรองรับการใช้งานภายในหอพักบุคลากรทางการแพทย์')">
-                    <div class="overflow-hidden"><img src="2.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="200"
+                    onclick="guideTalk('การติดตั้งและกำหนดค่าระบบเครือข่าย UniFi รวมถึงการเข้าหัวสายสัญญาณความเร็วสูง เพื่อรองรับการใช้งานภายในหอพักบุคลากรทางการแพทย์')">
+                    <div class="overflow-hidden"><img src="2.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Network Infrastructure</h3>
                         <p class="text-cyan-400 mb-4 font-light">System Installation & Setup</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">การติดตั้งและกำหนดค่าระบบเครือข่าย UniFi รวมถึงการเข้าหัวสายสัญญาณความเร็วสูง เพื่อรองรับการใช้งานภายในหอพักบุคลากรทางการแพทย์</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">การติดตั้งและกำหนดค่าระบบเครือข่าย UniFi
+                            รวมถึงการเข้าหัวสายสัญญาณความเร็วสูง เพื่อรองรับการใช้งานภายในหอพักบุคลากรทางการแพทย์</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('การเข้าหัวสายแลนและตรวจสอบสัญญาณระบบโทรศัพท์พื้นฐาน ณ แผนกทันตกรรม เพื่อรองรับระบบบริหารจัดการผู้ป่วย')">
-                    <div class="overflow-hidden"><img src="8.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer"
+                    data-aos="fade-up"
+                    onclick="guideTalk('การเข้าหัวสายแลนและตรวจสอบสัญญาณระบบโทรศัพท์พื้นฐาน ณ แผนกทันตกรรม เพื่อรองรับระบบบริหารจัดการผู้ป่วย')">
+                    <div class="overflow-hidden"><img src="8.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">On-Site Technical Support</h3>
                         <p class="text-cyan-400 mb-4 font-light">Network & Infrastructure</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">การเข้าหัวสายแลนและตรวจสอบสัญญาณระบบโทรศัพท์พื้นฐาน ณ แผนกทันตกรรม เพื่อรองรับระบบบริหารจัดการผู้ป่วย</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            การเข้าหัวสายแลนและตรวจสอบสัญญาณระบบโทรศัพท์พื้นฐาน ณ แผนกทันตกรรม
+                            เพื่อรองรับระบบบริหารจัดการผู้ป่วย</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('วิเคราะห์โครงสร้าง Hardware และดำเนินการอัปเกรด RAM Server ในระบบ Data Center เพื่อเพิ่มศักยภาพในการรองรับ User และแอปพลิเคชันภายในองค์กร')">
-                    <div class="overflow-hidden"><img src="3.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="200"
+                    onclick="guideTalk('วิเคราะห์โครงสร้าง Hardware และดำเนินการอัปเกรด RAM Server ในระบบ Data Center เพื่อเพิ่มศักยภาพในการรองรับ User และแอปพลิเคชันภายในองค์กร')">
+                    <div class="overflow-hidden"><img src="3.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Server & Data Center Management</h3>
                         <p class="text-cyan-400 mb-4 font-light">Hardware Upgrade & Maintenance</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">วิเคราะห์โครงสร้าง Hardware และดำเนินการอัปเกรด RAM Server ในระบบ Data Center เพื่อเพิ่มศักยภาพในการรองรับ User และแอปพลิเคชันภายในองค์กร</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">วิเคราะห์โครงสร้าง Hardware และดำเนินการอัปเกรด
+                            RAM Server ในระบบ Data Center เพื่อเพิ่มศักยภาพในการรองรับ User และแอปพลิเคชันภายในองค์กร
+                        </p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('ดำเนินการเลือกสรรอุปกรณ์ จัดสเปก และประกอบคอมพิวเตอร์สำหรับการใช้งานเฉพาะทาง พร้อมตรวจสอบความเรียบร้อยของอุปกรณ์และการจัดสายไฟ (Cable Management)')">
-                    <div class="overflow-hidden"><img src="4.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer"
+                    data-aos="fade-up"
+                    onclick="guideTalk('ดำเนินการเลือกสรรอุปกรณ์ จัดสเปก และประกอบคอมพิวเตอร์สำหรับการใช้งานเฉพาะทาง พร้อมตรวจสอบความเรียบร้อยของอุปกรณ์และการจัดสายไฟ (Cable Management)')">
+                    <div class="overflow-hidden"><img src="4.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Computer Hardware Assembly</h3>
                         <p class="text-cyan-400 mb-4 font-light">Hardware Specialist</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการเลือกสรรอุปกรณ์ จัดสเปก และประกอบคอมพิวเตอร์สำหรับการใช้งานเฉพาะทาง พร้อมตรวจสอบความเรียบร้อยของอุปกรณ์และการจัดสายไฟ (Cable Management)</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการเลือกสรรอุปกรณ์ จัดสเปก
+                            และประกอบคอมพิวเตอร์สำหรับการใช้งานเฉพาะทาง
+                            พร้อมตรวจสอบความเรียบร้อยของอุปกรณ์และการจัดสายไฟ (Cable Management)</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('ร่วมออกแบบและพัฒนาตู้ Kiosk อัจฉริยะเพื่อเพิ่มประสิทธิภาพการให้บริการในพื้นที่สาธารณะ โดยดูแลทั้งในส่วนของการติดตั้งระบบ (System Deployment) และการบำรุงรักษาอุปกรณ์เพื่อให้พร้อมใช้งานตลอดเวลา')">
-                    <div class="overflow-hidden"><img src="5.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="200"
+                    onclick="guideTalk('ร่วมออกแบบและพัฒนาตู้ Kiosk อัจฉริยะเพื่อเพิ่มประสิทธิภาพการให้บริการในพื้นที่สาธารณะ โดยดูแลทั้งในส่วนของการติดตั้งระบบ (System Deployment) และการบำรุงรักษาอุปกรณ์เพื่อให้พร้อมใช้งานตลอดเวลา')">
+                    <div class="overflow-hidden"><img src="5.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Smart Kiosk System Development</h3>
                         <p class="text-cyan-400 mb-4 font-light">System Integration & Solution</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">ร่วมออกแบบและพัฒนาตู้ Kiosk อัจฉริยะเพื่อเพิ่มประสิทธิภาพการให้บริการในพื้นที่สาธารณะ โดยดูแลทั้งในส่วนของการติดตั้งระบบ (System Deployment) และการบำรุงรักษาอุปกรณ์เพื่อให้พร้อมใช้งานตลอดเวลา</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">ร่วมออกแบบและพัฒนาตู้ Kiosk
+                            อัจฉริยะเพื่อเพิ่มประสิทธิภาพการให้บริการในพื้นที่สาธารณะ โดยดูแลทั้งในส่วนของการติดตั้งระบบ
+                            (System Deployment) และการบำรุงรักษาอุปกรณ์เพื่อให้พร้อมใช้งานตลอดเวลา</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer" data-aos="fade-up" onclick="guideTalk('ดำเนินการตรวจสอบระบบความร้อนภายในตู้ Kiosk และทำการติดตั้งพัดลมระบายความร้อนเพิ่มเติม เพื่อป้องกันการ Overheat ของอุปกรณ์ภายใน และช่วยยืดอายุการใช้งานของระบบคอมพิวเตอร์และวงจรควบคุมให้ทำงานได้อย่างมีเสถียรภาพตลอด 24 ชั่วโมง')">
-                    <div class="overflow-hidden"><img src="6.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl cursor-pointer"
+                    data-aos="fade-up"
+                    onclick="guideTalk('ดำเนินการตรวจสอบระบบความร้อนภายในตู้ Kiosk และทำการติดตั้งพัดลมระบายความร้อนเพิ่มเติม เพื่อป้องกันการ Overheat ของอุปกรณ์ภายใน และช่วยยืดอายุการใช้งานของระบบคอมพิวเตอร์และวงจรควบคุมให้ทำงานได้อย่างมีเสถียรภาพตลอด 24 ชั่วโมง')">
+                    <div class="overflow-hidden"><img src="6.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Thermal Management & Hardware Tuning</h3>
                         <p class="text-cyan-400 mb-4 font-light">System Reliability</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการตรวจสอบระบบความร้อนภายในตู้ Kiosk และทำการติดตั้งพัดลมระบายความร้อนเพิ่มเติม เพื่อป้องกันการ Overheat ของอุปกรณ์ภายใน และช่วยยืดอายุการใช้งานของระบบคอมพิวเตอร์และวงจรควบคุมให้ทำงานได้อย่างมีเสถียรภาพตลอด 24 ชั่วโมง</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการตรวจสอบระบบความร้อนภายในตู้ Kiosk
+                            และทำการติดตั้งพัดลมระบายความร้อนเพิ่มเติม เพื่อป้องกันการ Overheat ของอุปกรณ์ภายใน
+                            และช่วยยืดอายุการใช้งานของระบบคอมพิวเตอร์และวงจรควบคุมให้ทำงานได้อย่างมีเสถียรภาพตลอด 24
+                            ชั่วโมง</p>
                     </div>
                 </div>
 
-                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer" data-aos="fade-up" data-aos-delay="200" onclick="guideTalk('ดำเนินการเข้าหัวสายสัญญาณคอมพิวเตอร์ (LAN) และสายโทรศัพท์ ณ จุดเชื่อมต่อปลายทาง (Wall Jack) พร้อมทำการทดสอบสัญญาณ (Signal Testing) เพื่อตรวจสอบความถูกต้องและเสถียรภาพของการรับส่งข้อมูลหลังการติดตั้ง')">
-                    <div class="overflow-hidden"><img src="7.jpg" class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
+                <div class="group relative overflow-hidden rounded-3xl glass shadow-2xl md:mt-20 cursor-pointer"
+                    data-aos="fade-up" data-aos-delay="200"
+                    onclick="guideTalk('ดำเนินการเข้าหัวสายสัญญาณคอมพิวเตอร์ (LAN) และสายโทรศัพท์ ณ จุดเชื่อมต่อปลายทาง (Wall Jack) พร้อมทำการทดสอบสัญญาณ (Signal Testing) เพื่อตรวจสอบความถูกต้องและเสถียรภาพของการรับส่งข้อมูลหลังการติดตั้ง')">
+                    <div class="overflow-hidden"><img src="7.jpg"
+                            class="w-full h-[400px] object-cover group-hover:scale-110 transition duration-700"></div>
                     <div class="p-8">
                         <h3 class="text-2xl font-bold mb-2">Network Termination & Testing</h3>
                         <p class="text-cyan-400 mb-4 font-light">Infrastructure Deployment</p>
-                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการเข้าหัวสายสัญญาณคอมพิวเตอร์ (LAN) และสายโทรศัพท์ ณ จุดเชื่อมต่อปลายทาง (Wall Jack) พร้อมทำการทดสอบสัญญาณ (Signal Testing) เพื่อตรวจสอบความถูกต้องและเสถียรภาพของการรับส่งข้อมูลหลังการติดตั้ง</p>
+                        <p class="text-gray-400 text-sm leading-relaxed">ดำเนินการเข้าหัวสายสัญญาณคอมพิวเตอร์ (LAN)
+                            และสายโทรศัพท์ ณ จุดเชื่อมต่อปลายทาง (Wall Jack) พร้อมทำการทดสอบสัญญาณ (Signal Testing)
+                            เพื่อตรวจสอบความถูกต้องและเสถียรภาพของการรับส่งข้อมูลหลังการติดตั้ง</p>
                     </div>
                 </div>
             </div>
 
             <div class="mt-32" data-aos="fade-up">
-                <h2 class="text-3xl font-bold mb-12 text-center">Innovation <span class="gradient-text">Showcase</span></h2>
+                <h2 class="text-3xl font-bold mb-12 text-center">Innovation <span class="gradient-text">Showcase</span>
+                </h2>
                 <div class="video-container glass p-2 max-w-4xl mx-auto">
                     <div class="rounded-[1.8rem] overflow-hidden">
                         <video class="w-full aspect-video object-cover" controls autoplay muted loop>
@@ -358,13 +458,15 @@
                         </video>
                     </div>
                 </div>
-                <p class="text-center mt-6 text-gray-500 italic font-light">วิดีโอสาธิตการทำงานของระบบควบคุมอัตโนมัติและภาพรวมโปรเจกต์</p>
+                <p class="text-center mt-6 text-gray-500 italic font-light">
+                    วิดีโอสาธิตการทำงานของระบบควบคุมอัตโนมัติและภาพรวมโปรเจกต์</p>
             </div>
         </section>
 
         <footer id="contact" class="py-40 text-center relative overflow-hidden">
             <div data-aos="fade-up" class="max-w-4xl mx-auto px-6">
-                <h2 class="text-5xl md:text-7xl font-extrabold mb-10 italic">Work <span class="gradient-text">Together</span></h2>
+                <h2 class="text-5xl md:text-7xl font-extrabold mb-10 italic">Work <span
+                        class="gradient-text">Together</span></h2>
                 <div class="grid md:grid-cols-3 gap-8 mb-16">
                     <div class="glass p-6 rounded-2xl glow-hover transition-all">
                         <div class="text-cyan-400 text-xs tracking-widest uppercase mb-2 font-bold">Phone</div>
@@ -423,64 +525,65 @@
         }
 
         // ฟังก์ชันสร้างปุ่มหัวข้อ
-function renderQuickReplies() {
-    const quickArea = document.getElementById('quick-area');
+        function renderQuickReplies() {
+            if (document.getElementById('quick-area')) return;
+            const quickArea = document.getElementById('quick-area');
 
-    if (!quickArea) {
-        const area = document.createElement('div');
-        area.id = 'quick-area';
-        area.className = 'quick-replies';
+            if (!quickArea) {
+                const area = document.createElement('div');
+                area.id = 'quick-area';
+                area.className = 'quick-replies';
 
-        // 👉 จัด layout ให้ปุ่มแยกกัน
-        area.style.display = 'flex';
-        area.style.gap = '12px';
-        area.style.flexWrap = 'wrap';
-        area.style.marginTop = '12px';
+                //  จัด layout ให้ปุ่มแยกกัน
+                area.style.display = 'flex';
+                area.style.gap = '12px';
+                area.style.flexWrap = 'wrap';
+                area.style.marginTop = '12px';
 
-        const topics = [
-            "ทักษะทั้งหมด",
-            "ประวัติฝึกงาน",
-            "โปรเจกต์เด่น",
-            "การศึกษา",
-            "ติดต่อแก้วตา"
-        ];
+                const topics = [
+                    "ทักษะทั้งหมด",
+                    "ประวัติฝึกงาน",
+                    "โปรเจกต์เด่น",
+                    "การศึกษา",
+                    "ติดต่อแก้วตา"
+                ];
 
-        topics.forEach(topic => {
-            const btn = document.createElement('button');
-            btn.className = 'btn-quick';
-            btn.innerText = topic;
+                topics.forEach(topic => {
+                    const btn = document.createElement('button');
+                    btn.className = 'btn-quick';
+                    btn.innerText = topic;
 
-            // 👉 style ปุ่มแต่ละอัน
-            btn.style.padding = '8px 14px';
-            btn.style.borderRadius = '18px';
-            btn.style.border = '1px solid #00e5ff';
-            btn.style.background = 'transparent';
-            btn.style.color = '#ffffff';
-            btn.style.cursor = 'pointer';
-            btn.style.fontSize = '14px';
-            btn.style.transition = 'all 0.25s ease';
+                    //  style ปุ่มแต่ละอัน
+                    btn.style.padding = '8px 14px';
+                    btn.style.borderRadius = '18px';
+                    btn.style.border = '1px solid #00e5ff';
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#ffffff';
+                    btn.style.cursor = 'pointer';
+                    btn.style.fontSize = '14px';
+                    btn.style.transition = 'all 0.25s ease';
 
-            btn.onmouseenter = () => {
-                btn.style.background = '#00e5ff';
-                btn.style.color = '#000';
-            };
+                    btn.onmouseenter = () => {
+                        btn.style.background = '#00e5ff';
+                        btn.style.color = '#000';
+                    };
 
-            btn.onmouseleave = () => {
-                btn.style.background = 'transparent';
-                btn.style.color = '#fff';
-            };
+                    btn.onmouseleave = () => {
+                        btn.style.background = 'transparent';
+                        btn.style.color = '#fff';
+                    };
 
-            btn.onclick = () => {
-                document.getElementById('user-input').value = topic;
-                sendMessage();
-            };
+                    btn.onclick = () => {
+                        document.getElementById('user-input').value = topic;
+                        sendMessage();
+                    };
 
-            area.appendChild(btn);
-        });
+                    area.appendChild(btn);
+                });
 
-        document.getElementById('chat-messages').after(area);
-    }
-}
+                document.getElementById('chat-messages').after(area);
+            }
+        }
 
 
         function sendMessage() {
@@ -503,7 +606,7 @@ function renderQuickReplies() {
                 // Logic การตอบคำถามอ้างอิงจากเรซูเม่
                 if (userText.includes("ทักษะ")) {
                     response = "แก้วตามีทักษะ IT Support (Hardware/Software), ดูแล Network (LAN/WiFi), และเชี่ยวชาญการทำ Dashboard ด้วย Grafana/Node-RED ครับ!";
-                } 
+                }
                 else if (userText.includes("ฝึกงาน")) {
                     response = "มีประสบการณ์ฝึกงานที่ 'โรงพยาบาลแวงน้อย' โดยดูแลระบบ Server HIS, แก้ไขปัญหา Hardware/Software และตรวจสอบระบบ Network ของโรงพยาบาลครับ";
                 }
@@ -557,13 +660,13 @@ function renderQuickReplies() {
             document.body.style.overflow = 'auto';
             document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => { guideTalk("ว้าว! ผลงานทั้งหมดของผมอยู่ตรงนี้ครับ ลองคลิกดูแต่ละงานได้เลย"); }, 1000);
-        } 
+        }
 
         window.addEventListener('scroll', () => {
             const contactSection = document.getElementById('contact');
             const rect = contactSection.getBoundingClientRect();
             if (rect.top >= 0 && rect.top <= window.innerHeight) {
-                if(!window.contactGreetingDone) {
+                if (!window.contactGreetingDone) {
                     guideTalk("นี่คือข้อมูลการติดต่อครับบ");
                     window.contactGreetingDone = true;
                 }
@@ -571,5 +674,5 @@ function renderQuickReplies() {
         });
     </script>
 </body>
-</html>
 
+</html>
